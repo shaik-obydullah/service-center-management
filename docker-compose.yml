@@ -1,0 +1,71 @@
+name: service-center-management
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: service-center-app
+    container_name: service-center-app
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - .:/var/www/html
+      - service_center_vendor:/var/www/html/vendor
+      - service_center_node_modules:/var/www/html/node_modules
+      - service_center_storage:/var/www/html/storage
+    env_file:
+      - .env
+    environment:
+      - DB_CONNECTION=mysql
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=service_center
+      - DB_USERNAME=service_center
+      - DB_PASSWORD=service-center-secret
+      - REDIS_HOST=cache
+    depends_on:
+      - db
+      - cache
+    ports:
+      - "8086:80"
+    networks:
+      - service_center_network
+
+  db:
+    image: mysql:8.0
+    container_name: service-center-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: service_center
+      MYSQL_USER: service_center
+      MYSQL_PASSWORD: service-center-secret
+      MYSQL_ROOT_PASSWORD: root-secret
+    ports:
+      - "3308:3306"
+    volumes:
+      - service_center_mysql:/var/lib/mysql
+    networks:
+      - service_center_network
+
+  cache:
+    image: redis:7-alpine
+    container_name: service-center-cache
+    restart: unless-stopped
+    ports:
+      - "6381:6379"
+    volumes:
+      - service_center_redis:/data
+    networks:
+      - service_center_network
+
+networks:
+  service_center_network:
+    driver: bridge
+
+volumes:
+  service_center_storage:
+  service_center_vendor:
+  service_center_node_modules:
+  service_center_mysql:
+  service_center_redis:

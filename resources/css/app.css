@@ -8,11 +8,15 @@
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
-@layer components {
-    .btn {
-        @apply inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-60;
-    }
+@utility btn {
+    @apply inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-60;
+}
 
+@utility badge {
+    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
+}
+
+@layer components {
     .btn-primary {
         @apply btn bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500;
     }
@@ -53,17 +57,13 @@
         @apply border-b border-slate-100 last:border-0;
     }
 
-    .badge {
-        @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
-    }
+    .badge-blue { @apply badge bg-blue-100 text-blue-700; }
+    .badge-violet { @apply badge bg-violet-100 text-violet-700; }
+    .badge-cyan { @apply badge bg-cyan-100 text-cyan-700; }
+    .badge-amber { @apply badge bg-amber-100 text-amber-700; }
+    .badge-orange { @apply badge bg-orange-100 text-orange-700; }
+    .badge-green { @apply badge bg-green-100 text-green-700; }
+    .badge-red { @apply badge bg-red-100 text-red-700; }
+    .badge-slate { @apply badge bg-slate-100 text-slate-700; }
+    .badge-indigo { @apply badge bg-indigo-100 text-indigo-700; }
 }
-
-.badge-blue { @apply badge bg-blue-100 text-blue-700; }
-.badge-violet { @apply badge bg-violet-100 text-violet-700; }
-.badge-cyan { @apply badge bg-cyan-100 text-cyan-700; }
-.badge-amber { @apply badge bg-amber-100 text-amber-700; }
-.badge-orange { @apply badge bg-orange-100 text-orange-700; }
-.badge-green { @apply badge bg-green-100 text-green-700; }
-.badge-red { @apply badge bg-red-100 text-red-700; }
-.badge-slate { @apply badge bg-slate-100 text-slate-700; }
-.badge-indigo { @apply badge bg-indigo-100 text-indigo-700; }

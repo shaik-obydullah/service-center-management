@@ -36,7 +36,7 @@ class TechnicianController extends Controller
     public function store(StoreTechnicianRequest $request)
     {
         $data = $request->validated();
-        $data['skills_json'] = $data['skills_json'] ?? [];
+        $data['skills_json'] = array_values(array_filter($data['skills_json'] ?? []));
 
         Technician::create($data);
 
@@ -71,7 +71,7 @@ class TechnicianController extends Controller
     public function update(UpdateTechnicianRequest $request, Technician $technician)
     {
         $data = $request->validated();
-        $data['skills_json'] = $data['skills_json'] ?? [];
+        $data['skills_json'] = array_values(array_filter($data['skills_json'] ?? []));
 
         $technician->update($data);
 

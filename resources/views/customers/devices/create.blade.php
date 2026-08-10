@@ -3,7 +3,7 @@
 @section('title', 'Add Device')
 
 @section('content')
-    <div class="mx-auto max-w-2xl">
+    <div class="w-full">
         <div class="card p-6">
             <div class="mb-6 flex items-center justify-between">
                 <h2 class="text-lg font-semibold text-slate-800">Add Device for {{ $customer->name }}</h2>

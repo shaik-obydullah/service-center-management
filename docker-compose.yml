@@ -42,7 +42,7 @@ services:
       MYSQL_PASSWORD: service-center-secret
       MYSQL_ROOT_PASSWORD: root-secret
     ports:
-      - "3308:3306"
+      - "3309:3306"
     volumes:
       - service_center_mysql:/var/lib/mysql
     networks:
@@ -56,6 +56,21 @@ services:
       - "6381:6379"
     volumes:
       - service_center_redis:/data
+    networks:
+      - service_center_network
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: service-center-pma
+    restart: unless-stopped
+    environment:
+      - PMA_HOST=db
+      - PMA_PORT=3306
+      - UPLOAD_LIMIT=100M
+    ports:
+      - "8087:80"
+    depends_on:
+      - db
     networks:
       - service_center_network
 

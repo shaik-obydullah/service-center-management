@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{{ $invoice->invoice_number }}</title>
+    <style>
+        body { font-family: 'DejaVu Sans', sans-serif; font-size: 13px; color: #1e293b; margin: 40px; }
+        .header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #4338ca; padding-bottom: 16px; }
+        .shop-name { font-size: 22px; font-weight: 700; color: #4338ca; }
+        .muted { color: #64748b; font-size: 12px; }
+        .invoice-title { font-size: 18px; font-weight: 700; }
+        .info { margin-top: 20px; display: flex; justify-content: space-between; }
+        .info-box { width: 45%; }
+        table { width: 100%; border-collapse: collapse; margin-top: 24px; }
+        th { background: #eef2ff; text-align: left; padding: 8px; font-size: 12px; }
+        td { padding: 8px; border-bottom: 1px solid #e2e8f0; }
+        .totals { margin-top: 20px; margin-left: auto; width: 300px; }
+        .totals td { border: none; padding: 4px 8px; }
+        .grand-total { font-weight: 700; font-size: 15px; border-top: 2px solid #1e293b; }
+        .footer { margin-top: 60px; font-size: 12px; color: #64748b; border-top: 1px solid #e2e8f0; padding-top: 12px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>
+            <div class="shop-name">{{ setting('shop_name', config('app.name')) }}</div>
+            @if (setting('address'))<div class="muted">{{ setting('address') }}</div>@endif
+            @if (setting('phone'))<div class="muted">Phone: {{ setting('phone') }}</div>@endif
+            @if (setting('email'))<div class="muted">Email: {{ setting('email') }}</div>@endif
+        </div>
+        <div class="invoice-title">INVOICE</div>
+    </div>
+
+    <div class="info">
+        <div class="info-box">
+            <div class="muted">BILLED TO</div>
+            <div style="font-weight:600">{{ $invoice->workOrder->customer->name }}</div>
+            <div class="muted">{{ $invoice->workOrder->customer->phone }}</div>
+            @if ($invoice->workOrder->customer->address)<div class="muted">{{ $invoice->workOrder->customer->address }}</div>@endif
+        </div>
+        <div class="info-box">
+            <table class="totals" style="width:100%; margin-top:0">
+                <tr><td class="muted">Invoice #</td><td style="font-weight:600">{{ $invoice->invoice_number }}</td></tr>
+                <tr><td class="muted">Work Order</td><td>{{ $invoice->workOrder->order_number }}</td></tr>
+                <tr><td class="muted">Date</td><td>{{ $invoice->created_at->format('M j, Y') }}</td></tr>
+                <tr><td class="muted">Device</td><td>{{ $invoice->workOrder->device?->brand }} {{ $invoice->workOrder->device?->model }}</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th style="text-align:right">Qty</th>
+                <th style="text-align:right">Unit Price</th>
+                <th style="text-align:right">Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Repair service — {{ $invoice->workOrder->repairService?->name ?: 'Service charge' }}</td>
+                <td style="text-align:right">1</td>
+                <td style="text-align:right">{{ format_money($invoice->service_charge, false) }}</td>
+                <td style="text-align:right">{{ format_money($invoice->service_charge, false) }}</td>
+            </tr>
+            @foreach ($invoice->workOrder->partUsages as $usage)
+                <tr>
+                    <td>{{ $usage->part->name }} ({{ $usage->part->code }})</td>
+                    <td style="text-align:right">{{ $usage->quantity }}</td>
+                    <td style="text-align:right">{{ format_money($usage->unit_price, false) }}</td>
+                    <td style="text-align:right">{{ format_money($usage->total, false) }}</td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+
+    <table class="totals">
+        <tr><td>Subtotal</td><td style="text-align:right">{{ format_money($invoice->subtotal, false) }}</td></tr>
+        <tr><td>Discount</td><td style="text-align:right">-{{ format_money($invoice->discount, false) }}</td></tr>
+        <tr><td>Tax</td><td style="text-align:right">{{ format_money($invoice->tax, false) }}</td></tr>
+        <tr class="grand-total"><td>Total</td><td style="text-align:right">{{ format_money($invoice->total, false) }}</td></tr>
+        <tr><td>Paid</td><td style="text-align:right">{{ format_money($invoice->paid_amount, false) }}</td></tr>
+        <tr class="grand-total"><td>Balance Due</td><td style="text-align:right">{{ format_money($invoice->balance_due, false) }}</td></tr>
+    </table>
+
+    <div class="footer">
+        @if (setting('invoice_footer'))
+            {{ setting('invoice_footer') }}
+        @else
+            Thank you for your business. Generated by {{ setting('shop_name', config('app.name')) }}.
+        @endif
+    </div>
+</body>
+</html>

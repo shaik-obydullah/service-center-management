@@ -12,6 +12,7 @@ use App\Http\Controllers\Web\ReportController;
 use App\Http\Controllers\Web\SettingController;
 use App\Http\Controllers\Web\SupplierController;
 use App\Http\Controllers\Web\TechnicianController;
+use App\Http\Controllers\Web\WarrantyController;
 use App\Http\Controllers\Web\WorkOrderController;
 use Illuminate\Support\Facades\Route;
 
@@ -61,6 +62,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/work-orders/{workOrder}/invoices', [InvoiceController::class, 'store'])->name('invoices.store');
     Route::post('/invoices/{invoice}/pay', [InvoiceController::class, 'pay'])->name('invoices.pay');
     Route::post('/payments/{payment}/refund', [InvoiceController::class, 'refund'])->name('payments.refund');
+
+    Route::get('/warranties', [WarrantyController::class, 'index'])->name('warranties.index');
+    Route::get('/warranties/{warranty}', [WarrantyController::class, 'show'])->name('warranties.show');
+    Route::post('/work-orders/{workOrder}/warranties', [WarrantyController::class, 'store'])->name('warranties.store');
+    Route::post('/warranties/{warranty}/revoke', [WarrantyController::class, 'revoke'])->name('warranties.revoke');
 
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
 

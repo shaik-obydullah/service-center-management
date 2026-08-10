@@ -3,12 +3,13 @@
 namespace App\Services;
 
 use App\Enums\WorkOrderStatus;
+use App\Jobs\SendCompletionAlert;
+use App\Jobs\SendStatusUpdate;
 use App\Models\Technician;
 use App\Models\TechnicianAssignment;
 use App\Models\WorkOrder;
 use App\Models\WorkOrderNote;
 use App\Models\WorkOrderStatusHistory;
-use App\Notifications\WorkOrderStatusNotification;
 use Illuminate\Support\Facades\DB;
 
 class WorkOrderService
@@ -74,13 +75,15 @@ class WorkOrderService
                 $workOrder->assignments()
                     ->whereNull('completed_at')
                     ->update(['completed_at' => now()]);
+
+                SendCompletionAlert::dispatch($workOrder);
+            } else {
+                SendStatusUpdate::dispatch($workOrder, $notes);
             }
 
             $workOrder->save();
 
             $this->recordStatusChange($workOrder, $status, $userId, $notes);
-
-            $workOrder->notify(new WorkOrderStatusNotification($workOrder));
 
             return $workOrder;
         });

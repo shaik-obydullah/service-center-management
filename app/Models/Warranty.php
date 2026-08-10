@@ -31,4 +31,27 @@ class Warranty extends Model
     {
         return $this->status === 'active' && $this->end_date->isPast();
     }
+
+    public function getStatusLabelAttribute(): string
+    {
+        if ($this->status === 'revoked') {
+            return 'Revoked';
+        }
+
+        return $this->is_expired ? 'Expired' : 'Active';
+    }
+
+    public function getStatusBadgeAttribute(): string
+    {
+        if ($this->status === 'revoked') {
+            return 'slate';
+        }
+
+        return $this->is_expired ? 'red' : 'green';
+    }
+
+    public function getRemainingDaysAttribute(): int
+    {
+        return max(0, (int) now()->startOfDay()->diffInDays($this->end_date, false));
+    }
 }

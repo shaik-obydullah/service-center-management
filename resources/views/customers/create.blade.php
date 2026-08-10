@@ -3,7 +3,7 @@
 @section('title', 'Add Customer')
 
 @section('content')
-    <div class="mx-auto max-w-2xl">
+    <div class="w-full">
         <div class="card p-6">
             <h2 class="mb-6 text-lg font-semibold text-slate-800">Customer Information</h2>
             <form method="POST" action="{{ route('customers.store') }}" class="space-y-4">

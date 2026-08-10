@@ -1,5 +1,20 @@
 # Service Center Management System
 
+<div align="center">
+
+![PHP](https://img.shields.io/badge/PHP-8.3-777BB4?logo=php&logoColor=white&style=flat-square)
+![Laravel](https://img.shields.io/badge/Laravel-13-FF2D20?logo=laravel&logoColor=white&style=flat-square)
+![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?logo=mysql&logoColor=white&style=flat-square)
+![Redis](https://img.shields.io/badge/Redis-7-DC382D?logo=redis&logoColor=white&style=flat-square)
+![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white&style=flat-square)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-4-06B6D4?logo=tailwindcss&logoColor=white&style=flat-square)
+![Alpine.js](https://img.shields.io/badge/Alpine.js-8BC0D0?logo=alpine.js&logoColor=white&style=flat-square)
+![Sanctum](https://img.shields.io/badge/Sanctum-4-E5342B?logo=laravel&logoColor=white&style=flat-square)
+![Tests](https://img.shields.io/badge/tests-58%20passed%20%7C%20198%20assertions-brightgreen?style=flat-square)
+![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)
+
+</div>
+
 A production-grade, full-featured web application for managing the daily operations of a mobile & electronics repair service center. Built with **Laravel 13**, **PHP 8.3**, **Blade**, **Alpine.js**, and **Tailwind CSS**, and containerized with **Docker Compose**, the system covers the entire customer repair lifecycle — intake, diagnosis, technician assignment, parts consumption, billing, payments, and warranty tracking — alongside inventory management, procurement, reporting, and a token-authenticated REST API.
 
 ---
@@ -14,6 +29,7 @@ A production-grade, full-featured web application for managing the daily operati
 - [Configuration](#configuration)
 - [Demo Data & Credentials](#demo-data--credentials)
 - [Application Modules](#application-modules)
+- [Screenshots](#screenshots)
 - [REST API](#rest-api)
 - [Background Jobs & Notifications](#background-jobs--notifications)
 - [Testing](#testing)
@@ -264,6 +280,44 @@ Revenue analytics, technician performance, popular repairs, and inventory valuat
 
 ### Settings
 Configure the shop profile, tax rate, default warranty duration, and reference data (device types, brands, part categories, repair services).
+
+## Screenshots
+
+### Dashboard & Login
+
+| | |
+|---|---|
+| ![Login](screenshots/Login.png) | ![Dashboard](screenshots/Dashboard.png) |
+
+### Work Orders
+
+| | |
+|---|---|
+| ![Work Orders List](screenshots/Work-Orders-List.png) | ![New Work Order](screenshots/New-Work-Order.png) |
+| ![Work Order Detail](screenshots/Work-Order.png) | |
+
+### Customers & Technicians
+
+| | |
+|---|---|
+| ![Customers](screenshots/Customers.png) | ![Add Customer](screenshots/Add-Customer.png) |
+| ![Technicians](screenshots/Technicians.png) | ![Add Technician](screenshots/Add-Technician.png) |
+
+### Inventory & Procurement
+
+| | |
+|---|---|
+| ![Parts Inventory](screenshots/Parts-Inventory.png) | ![Add Part](screenshots/Add-Part.png) |
+| ![Suppliers](screenshots/Suppliers.png) | ![Add Supplier](screenshots/Add-Supplier.png) |
+| ![Purchase Orders](screenshots/Purchase-Orders.png) | ![New Purchase Order](screenshots/New-Purchase-Order.png) |
+
+### Billing, Warranty, Reports & Settings
+
+| | |
+|---|---|
+| ![Invoices](screenshots/Invoices.png) | ![Warranties](screenshots/Warranties.png) |
+| ![Warranty](screenshots/Warranty.png) | ![Reports](screenshots/Reports.png) |
+| ![Settings](screenshots/Settings.png) | |
 
 ---
 
